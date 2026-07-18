@@ -67,3 +67,43 @@ class RecordsResponse(BaseModel):
     """Stable list envelope for dashboard tables."""
 
     records: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class ForecastRequest(BaseModel):
+    """Zone-level demand request at an explicit UTC prediction time."""
+
+    zone_id: UUID
+    prediction_at: datetime
+
+
+class ForecastResponse(BaseModel):
+    """Three horizon demand forecast response."""
+
+    next_1_hour: float
+    next_3_hours: float
+    next_6_hours: float
+    model_version: str
+
+
+class EtaRequest(BaseModel):
+    """Validated ETA delivery context with demand supplied by orchestration."""
+
+    restaurant_id: str
+    customer_id: str
+    distance_km: float = Field(ge=0)
+    weather: str
+    traffic_level: str
+    vehicle_type: str
+    hour: int = Field(ge=0, le=23)
+    predicted_demand: float = Field(default=0, ge=0)
+
+
+class EtaResponse(BaseModel):
+    """ETA prediction response for dashboard rendering."""
+
+    eta_seconds: float
+    model_version: str
+    distance_km: float
+    weather: str
+    traffic_level: str
+    predicted_demand: float
