@@ -41,6 +41,8 @@ class Settings(BaseSettings):
     api_host: str = Field(default="0.0.0.0", min_length=1)
     api_port: Annotated[int, Field(ge=1, le=65535)] = 8000
     api_prefix: str = Field(default="/api/v1", min_length=1)
+    cors_allowed_origins: str = Field(default="http://localhost:8000,http://localhost:8080")
+    frontend_directory: Path = Path("frontend")
     log_level: str = Field(default="INFO", min_length=1, max_length=16)
     log_format: LogFormat = LogFormat.JSON
 
@@ -63,11 +65,20 @@ class Settings(BaseSettings):
     redis_socket_timeout_seconds: PositiveInt = 3
     redis_feature_ttl_seconds: PositiveInt = 3600
     redis_weather_ttl_seconds: PositiveInt = 1800
+    redis_key_prefix: str = Field(default="delivery-ml", min_length=1, max_length=64)
 
     model_artifacts_directory: Path = Path("artifacts")
     model_registry_stage: str = Field(default="production", min_length=1, max_length=64)
     random_seed: Annotated[int, Field(ge=0, le=2_147_483_647)] = 42
     inference_max_batch_size: PositiveInt = 1000
+    model_validation_fraction: Annotated[float, Field(gt=0, lt=0.5)] = 0.2
+    xgboost_n_estimators: PositiveInt = 300
+    xgboost_max_depth: PositiveInt = 6
+    xgboost_learning_rate: Annotated[float, Field(gt=0, le=1)] = 0.05
+    xgboost_subsample: Annotated[float, Field(gt=0, le=1)] = 0.8
+    xgboost_colsample_bytree: Annotated[float, Field(gt=0, le=1)] = 0.8
+    xgboost_min_child_weight: PositiveInt = 1
+    xgboost_n_jobs: PositiveInt = 1
 
     retrain_schedule_day_of_week: str = Field(default="sunday", min_length=1)
     retrain_schedule_hour_utc: Annotated[int, Field(ge=0, le=23)] = 2
