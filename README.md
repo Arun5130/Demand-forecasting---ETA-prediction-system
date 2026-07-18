@@ -36,4 +36,5 @@ See [docs/foundation.md](docs/foundation.md) for configuration details and
 [docs/api.md](docs/api.md) for the current FastAPI endpoints and dashboard serving, and
 [docs/cache.md](docs/cache.md) for Redis feature-cache behavior. The feature contract and
 leakage controls are documented in [docs/features.md](docs/features.md). Model training
-and registry activation are described in [docs/models.md](docs/models.md).
+and registry activation are described in [docs/models.md](docs/models.md). The idempotent
+CSV ingestion contract is described in [docs/etl.md](docs/etl.md).

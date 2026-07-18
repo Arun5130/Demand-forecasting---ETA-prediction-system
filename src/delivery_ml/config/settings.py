@@ -79,6 +79,7 @@ class Settings(BaseSettings):
     xgboost_colsample_bytree: Annotated[float, Field(gt=0, le=1)] = 0.8
     xgboost_min_child_weight: PositiveInt = 1
     xgboost_n_jobs: PositiveInt = 1
+    etl_batch_size: PositiveInt = 1000
 
     retrain_schedule_day_of_week: str = Field(default="sunday", min_length=1)
     retrain_schedule_hour_utc: Annotated[int, Field(ge=0, le=23)] = 2
